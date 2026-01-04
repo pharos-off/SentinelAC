@@ -1,0 +1,25 @@
+name: SentinelAC
+version: '1.0.0'
+main: fr.pharos.sentinelac.SentinelAC
+api-version: '1.20'
+author: Pharos
+description: Plugin anti-cheat professionnel
+softdepend: [ProtocolLib]
+
+commands:
+  anticheat:
+    description: Commande principale de l'anti-cheat
+    aliases: [ac]
+    usage: /<command> [alerts|violations|reset]
+    permission: anticheat.admin
+
+permissions:
+  anticheat.admin:
+    description: Accès complet à l'anti-cheat
+    default: op
+  anticheat.bypass:
+    description: Bypass toutes les vérifications
+    default: false
+  anticheat.alerts:
+    description: Recevoir les alertes de violations
+    default: op

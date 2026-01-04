@@ -1,0 +1,218 @@
+# Configuration AntiCheat Plugin
+# Redémarrez le serveur après modification
+
+# Système de mise à jour automatique
+# MERCI DE NE PAS MODIFIER LE LIEN VERS LA PAGE DE TELECHARGEMENT SOUS PEINE DE CASSER LE SYSTEME DE MISE A JOUR
+auto-updater:
+  enabled: true
+  # Téléchargement automatique des mises à jour
+  # Si désactivé, merci de faire la commande /ac update
+  auto-download: false
+  # Intervalle de vérification (en heures)
+  check-interval: 12
+  # URL du fichier de version (contient juste le numéro de version)
+  version-url: "https://raw.githubusercontent.com/pharos-off/SentinelAC/main/version.txt"
+  # URL de téléchargement du JAR
+  download-url: "https://github.com/pharos-off/SentinelAC/releases/download/Paper%2FSpigot/SentinelAC-1.0.0.jar"
+
+# Base de données MySQL
+database:
+  enabled: false
+  host: "localhost"
+  port: 3306
+  database: "sentinelac"
+  username: "root"
+  password: "password"
+  # Paramètres de la pool de connexions
+  pool:
+    maximum-pool-size: 10
+    minimum-idle: 2
+    connection-timeout: 30000
+    idle-timeout: 600000
+    max-lifetime: 1800000
+
+# Machine Learning
+machine-learning:
+  enabled: true
+  # Taille minimale de l'échantillon pour analyse
+  min-sample-size: 100
+  # Seuil de confiance pour flagging (0.0 - 1.0)
+  confidence-threshold: 0.85
+  # Entraîner le modèle toutes les X minutes
+  training-interval: 30
+  # Sauvegarder les patterns suspects
+  save-suspicious-patterns: true
+
+# Vérification des packets NMS
+packet-analysis:
+  enabled: true
+  # Checks basés sur les packets
+  checks:
+    flying-packets:
+      enabled: true
+      max-packets-per-second: 25
+    position-packets:
+      enabled: true
+      max-position-diff: 10.0
+    rotation-packets:
+      enabled: true
+      max-rotation-speed: 180.0
+    transaction-packets:
+      enabled: true
+      detect-timer: true
+    # NOUVEAUX CHECKS
+    badpackets:
+      enabled: true
+      max-violations: 10  # Augmenté pour éviter faux positifs
+    abilities:
+      enabled: true
+      max-violations: 3
+    noslow:
+      enabled: true
+      max-violations: 8
+    exploit:
+      enabled: true
+      max-violations: 1
+
+# Paramètres généraux
+general:
+  # Activer le debug (affiche plus d'infos console)
+  debug: false
+  # Auto-ban après X violations
+  auto-ban-threshold: 50
+  # Commande exécutée lors d'un ban (laisser vide pour désactiver)
+  ban-command: "ban %player% Détection anti-cheat: %check%"
+
+# Système de violations
+violations:
+  # Temps avant décrémentation des violations (secondes)
+  decay-time: 60
+  # Nombre de violations retirées par décrémentation
+  decay-amount: 1
+
+# Checks de mouvement
+movement:
+  fly:
+    enabled: true
+    max-violations: 10
+    # Hauteur max de saut sans effets
+    max-jump-height: 1.5
+    # Distance max en vol sans elytra
+    max-air-distance: 5.0
+
+  speed:
+    enabled: true
+    max-violations: 10
+    # Multiplicateur de vitesse max (1.0 = normal)
+    max-speed-multiplier: 1.35
+    # Tolérance pour lag
+    lag-tolerance: 0.2
+
+  nofall:
+    enabled: true
+    max-violations: 5
+    # Distance min de chute avant dégâts
+    min-fall-distance: 3.0
+
+  step:
+    enabled: true
+    max-violations: 8
+    max-step-height: 0.65
+
+  jesus:
+    enabled: true
+    max-violations: 6
+
+  spider:
+    enabled: true
+    max-violations: 7
+    min-climb-speed: 0.1
+
+  phase:
+    enabled: true
+    max-violations: 3
+
+  blink:
+    enabled: true
+    max-violations: 5
+    max-desync-time: 2000
+
+  strafe:
+    enabled: true
+    max-violations: 8
+    max-strafe-consistency: 0.95
+
+# Checks de combat
+combat:
+  killaura:
+    enabled: true
+    max-violations: 8
+    # Angle max de vision pour toucher (degrés)
+    max-attack-angle: 120
+    # Distance max d'attaque
+    max-reach: 3.5
+
+  autoclicker:
+    enabled: true
+    max-violations: 10
+    # CPS maximum autorisé
+    max-cps: 20
+    # Vérifier la régularité des clics
+    check-consistency: true
+
+  antiknockback:
+    enabled: true
+    max-violations: 6
+    min-knockback-ratio: 0.6
+
+  keepsprint:
+    enabled: true
+    max-violations: 5
+
+  backtrack:
+    enabled: true
+    max-violations: 7
+    max-backtrack: 3.0
+
+# Checks de blocs
+blocks:
+  fastbreak:
+    enabled: true
+    max-violations: 8
+    # Tolérance de temps (ms)
+    break-time-tolerance: 50
+
+  xray:
+    enabled: true
+    max-violations: 15
+    # Ratio suspect de minerais précieux
+    suspicious-ore-ratio: 0.8
+    # Blocs surveillés pour XRay
+    watched-blocks:
+      - DIAMOND_ORE
+      - DEEPSLATE_DIAMOND_ORE
+      - ANCIENT_DEBRIS
+      - EMERALD_ORE
+      - GOLD_ORE
+
+# Checks d'interaction
+interaction:
+  autoarmor:
+    enabled: true
+    max-violations: 5
+    min-equip-time: 150
+
+  autopotion:
+    enabled: true
+    max-violations: 6
+    min-potion-time: 1200
+
+# Alertes pour staff
+alerts:
+  # Format du message d'alerte
+  format: "&c[AC] &e%player% &7a déclenché &f%check% &7(VL: %violations%/%max%)"
+  # Activer les alertes sonores
+  sound-enabled: true
+  sound-type: "BLOCK_NOTE_BLOCK_PLING"
+  # Cooldown entre alertes pour le même joueur (secondes)
+  cooldown: 3
